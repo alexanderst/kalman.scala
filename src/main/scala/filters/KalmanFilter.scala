@@ -29,7 +29,9 @@ class KalmanFilter
 
    def update(y:DenseMatrix[Double]): Unit = {
       // Predict phase (time update)
-      Xpredicted = A * Xmeasured //+ B * u
+      // Predict value based by measurement. Omit control here as noise
+      Xpredicted = A * Xmeasured // + control_input_vector * control_vector
+      // Calculate covariance error
       P = A * P * A.t + Q
 
       // Measurement Update phase (correction with feedback)
